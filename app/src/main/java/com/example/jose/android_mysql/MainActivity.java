@@ -8,8 +8,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.kosalgeek.genasync12.AsyncResponse;
+import com.kosalgeek.genasync12.PostResponseAsyncTask;
+
+import java.util.HashMap;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+	EditText etUsername, etPassword;
+	Button btnLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
 						.setAction("Action", null).show();
 			}
 		});
+
+		etUsername = (EditText) findViewById(R.id.etUsername);
+		etPassword= (EditText) findViewById(R.id.etPassword);
+		btnLogin = (Button) findViewById(R.id.btnLogin);
+		btnLogin.setOnClickListener(this);
+
 	}
 
 	@Override
@@ -48,5 +65,26 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		String username = etUsername.getText().toString();
+		String password = etPassword.getText().toString();
+		HashMap postData = new HashMap();
+		postData.put("txtUsername", username);
+		postData.put("txtPassword", password);
+
+		PostResponseAsyncTask task = new PostResponseAsyncTask(MainActivity.this, postData, new AsyncResponse() {
+			@Override
+			public void processFinish(String result) {
+				Toast.makeText(MainActivity.this, result, Toast.LENGTH_LONG).show();
+
+			}
+		});
+
+		task.execute("http://10.0.3.2:8080/customer/index.php");
+
 	}
 }
