@@ -4,9 +4,11 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -50,6 +52,8 @@ public class SubActivity extends AppCompatActivity implements AsyncResponse,
 			}
 		});
 
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		PostResponseAsyncTask task = new PostResponseAsyncTask(SubActivity.this, this);
 
 		task.execute("http://10.0.3.2:8080/customer/product.php");
@@ -57,6 +61,15 @@ public class SubActivity extends AppCompatActivity implements AsyncResponse,
 		swipe_refresh_layout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
 		swipe_refresh_layout.setOnRefreshListener(this);
 
+	}
+	@Override
+	public  boolean onOptionsItemSelected(MenuItem item){
+		switch (item.getItemId()){
+			case android.R.id.home:
+				NavUtils.navigateUpFromSameTask(this);
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
