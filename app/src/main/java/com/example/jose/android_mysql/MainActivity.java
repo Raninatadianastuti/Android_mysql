@@ -1,13 +1,14 @@
 package com.example.jose.android_mysql;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -79,7 +80,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		PostResponseAsyncTask task = new PostResponseAsyncTask(MainActivity.this, postData, new AsyncResponse() {
 			@Override
 			public void processFinish(String result) {
-				Toast.makeText(MainActivity.this, result, Toast.LENGTH_LONG).show();
+				if(result.contains("success")){
+					Intent in = new Intent(MainActivity.this, SubActivity.class);
+					startActivity(in);
+				}
+				else {
+					Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
+
+				}
 
 			}
 		});
