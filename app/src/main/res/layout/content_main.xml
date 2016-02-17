@@ -43,4 +43,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="92dp"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adding Product"
+        android:id="@+id/btnAddProduct"
+        android:layout_below="@+id/btnLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="73dp"/>
 </RelativeLayout>

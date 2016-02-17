@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(this);
 
+		Button btnAddProduct = (Button)findViewById(R.id.btnAddProduct);
+		btnAddProduct.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MainActivity.this, Main2Activity.class));
+			}
+		});
+
 	}
 
 	@Override
