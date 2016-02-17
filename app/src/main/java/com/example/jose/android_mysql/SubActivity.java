@@ -4,16 +4,19 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.amigold.fundapter.BindDictionary;
 import com.amigold.fundapter.FunDapter;
 import com.amigold.fundapter.extractors.StringExtractor;
 import com.amigold.fundapter.interfaces.DynamicImageLoader;
+import com.amigold.fundapter.interfaces.ItemClickListener;
 import com.kosalgeek.android.json.JsonConverter;
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
@@ -26,7 +29,10 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.ArrayList;
 
-public class SubActivity extends AppCompatActivity implements AsyncResponse {
+public class SubActivity extends AppCompatActivity implements AsyncResponse,
+		SwipeRefreshLayout.OnRefreshListener{
+
+	private  SwipeRefreshLayout swipe_refresh_layout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,10 @@ public class SubActivity extends AppCompatActivity implements AsyncResponse {
 		PostResponseAsyncTask task = new PostResponseAsyncTask(SubActivity.this, this);
 
 		task.execute("http://10.0.3.2:8080/customer/product.php");
+
+		swipe_refresh_layout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
+		swipe_refresh_layout.setOnRefreshListener(this);
+
 	}
 
 	@Override
@@ -60,6 +70,11 @@ public class SubActivity extends AppCompatActivity implements AsyncResponse {
 			@Override
 			public String getStringValue(Product product, int position) {
 				return product.name;
+			}
+		}).onClick(new ItemClickListener<Product>() {
+			@Override
+			public void onClick(Product item, int position, View view) {
+				Toast.makeText(SubActivity.this, item.name, Toast.LENGTH_LONG).show();
 			}
 		});
 
@@ -92,7 +107,12 @@ public class SubActivity extends AppCompatActivity implements AsyncResponse {
 
 					}
 				}
-		);
+		) .onClick(new ItemClickListener<Product>() {
+			@Override
+			public void onClick(Product item, int position, View view) {
+				Toast.makeText(SubActivity.this, item.image_url, Toast.LENGTH_LONG).show();
+			}
+		});
 
 		FunDapter<Product> adapter = new FunDapter<>(SubActivity.this, productList,
 				R.layout.product_layout, dict);
@@ -126,5 +146,13 @@ public class SubActivity extends AppCompatActivity implements AsyncResponse {
 						.build();
 
 		return config;
+	}
+
+	@Override
+	public void onRefresh(){
+		swipe_refresh_layout.setRefreshing(true);
+		PostResponseAsyncTask task = new PostResponseAsyncTask(SubActivity.this, this);
+		task.execute("http://10.0.3.2:8080/customer/product.php");
+		swipe_refresh_layout.setRefreshing(false);
 	}
 }
