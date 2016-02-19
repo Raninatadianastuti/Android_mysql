@@ -38,7 +38,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 		etName = (EditText)findViewById(R.id.etName);
 		etQty = (EditText)findViewById(R.id.etQty);
 		etPrice = (EditText)findViewById(R.id.etPrice);
-		etImageUrl = (EditText)findViewById(R.id.etImagenUrl);
+		etImageUrl = (EditText)findViewById(R.id.etImageUrl);
 		Button btnAdd = (Button)findViewById(R.id.btnAdd);
 		btnAdd.setOnClickListener(this);
 	}

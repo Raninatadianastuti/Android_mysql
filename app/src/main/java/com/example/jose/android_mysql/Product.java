@@ -2,10 +2,12 @@ package com.example.jose.android_mysql;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by jose on 16/2/2016.
  */
-public class Product {
+public class Product implements Serializable {
 
 	@SerializedName("pid")
 	public int pid;

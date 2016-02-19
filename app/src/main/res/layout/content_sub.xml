@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-                                              android:id="@+id/swipe_refresh_layout"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="match_parent">
-        <RelativeLayout
+<RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -17,6 +12,11 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context="com.example.jose.android_mysql.SubActivity"
             tools:showIn="@layout/activity_sub">
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
             <ListView
                 android:layout_width="match_parent"
@@ -24,5 +24,5 @@
                 android:id="@+id/IvProduct"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"/>
-        </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

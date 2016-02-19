@@ -24,7 +24,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/tvQty"
-            android:layout_below="@+id/tvName"
+            android:layout_below="@+id/imageView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
 
@@ -34,17 +34,17 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/tvPrice"
-            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/tvQty"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:src="@android:drawable/star_on"
-            android:layout_below="@+id/tvQty"
-            android:layout_alignLeft="@+id/tvQty"
-            android:layout_alignStart="@+id/tvQty"/>
+            android:layout_below="@+id/tvName"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
     </RelativeLayout>
 </LinearLayout>

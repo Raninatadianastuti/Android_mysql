@@ -1,5 +1,6 @@
 package com.example.jose.android_mysql;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -32,7 +34,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import java.util.ArrayList;
 
 public class SubActivity extends AppCompatActivity implements AsyncResponse,
-		SwipeRefreshLayout.OnRefreshListener{
+		SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
 
 	private  SwipeRefreshLayout swipe_refresh_layout;
 
@@ -72,12 +74,14 @@ public class SubActivity extends AppCompatActivity implements AsyncResponse,
 		return super.onOptionsItemSelected(item);
 	}
 
+	ArrayList<Product> productList;
+
 	@Override
 	public void processFinish(String jsonText) {
 
 		ImageLoader.getInstance().init(UILConfig());
 
-		ArrayList<Product> productList = new JsonConverter<Product>().toArrayList(jsonText,Product.class);
+		productList = new JsonConverter<Product>().toArrayList(jsonText,Product.class);
 		BindDictionary<Product> dict = new BindDictionary<Product>();
 		dict.addStringField(R.id.tvName, new StringExtractor<Product>() {
 			@Override
@@ -132,6 +136,7 @@ public class SubActivity extends AppCompatActivity implements AsyncResponse,
 
 		ListView lvProduct = (ListView)findViewById(R.id.IvProduct);
 		lvProduct.setAdapter(adapter);
+		lvProduct.setOnItemClickListener(this);
 
 	}
 
@@ -167,5 +172,14 @@ public class SubActivity extends AppCompatActivity implements AsyncResponse,
 		PostResponseAsyncTask task = new PostResponseAsyncTask(SubActivity.this, this);
 		task.execute("http://10.0.3.2:8080/customer/product.php");
 		swipe_refresh_layout.setRefreshing(false);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Product product = productList.get(position);
+
+		Intent in= new Intent(SubActivity.this, DetailActivity.class);
+		in.putExtra("product",  product);
+		startActivity(in);
 	}
 }
